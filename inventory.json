@@ -1,27 +1,20 @@
 [
   {
-    "itemCode":"TSH001",
-    "productName":"Blue T-Shirt",
-    "grade":"A",
-    "sellingPrice":999,
-    "remarks":"Fast Moving",
-    "stores":[
-      {
-        "storeCode":"apr",
-        "qty":3
-      },
-      {
-        "storeCode":"bng",
-        "qty":5
-      },
-      {
-        "storeCode":"bns",
-        "qty":10
-      },
-      {
-        "storeCode":"msr",
-        "qty":20
-      }
-    ]
+    "sku":"TSH001",
+    "item":"Blue T-Shirt",
+    "qty":25,
+    "store":"HSR"
+  },
+  {
+    "sku":"SHOE101",
+    "item":"Running Shoes",
+    "qty":5,
+    "store":"IND"
+  },
+  {
+    "sku":"BAG550",
+    "item":"Laptop Bag",
+    "qty":0,
+    "store":"MYS"
   }
 ]

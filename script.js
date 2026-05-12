@@ -1,111 +1,87 @@
-const DATA_URL = './inventory.json';
-
-let mode = 'item';
 let inventoryData = [];
 
-const itemBtn = document.getElementById('itemBtn');
-const storeBtn = document.getElementById('storeBtn');
+async function loadInventory(){
 
-itemBtn.addEventListener('click', () => {
-  mode = 'item';
-  itemBtn.classList.add('active');
-  storeBtn.classList.remove('active');
-});
-
-storeBtn.addEventListener('click', () => {
-  mode = 'store';
-  storeBtn.classList.add('active');
-  itemBtn.classList.remove('active');
-});
-
-async function loadData(){
-  const response = await fetch(DATA_URL);
+  const response = await fetch('inventory.json');
   inventoryData = await response.json();
+
+  populateStoreFilter();
+  renderInventory(inventoryData);
+  updateKPIs(inventoryData);
 }
 
-document.getElementById('searchBtn').addEventListener('click', searchInventory);
+function populateStoreFilter(){
 
-function searchInventory(){
+  const storeFilter = document.getElementById('storeFilter');
 
-  const value = document.getElementById('searchInput').value.trim().toLowerCase();
+  const stores = [...new Set(inventoryData.map(i => i.store))];
 
-  const resultDiv = document.getElementById('result');
+  stores.forEach(store => {
+    const option = document.createElement('option');
+    option.value = store;
+    option.textContent = store;
+    storeFilter.appendChild(option);
+  });
+}
 
-  resultDiv.innerHTML = '';
+function renderInventory(data){
 
-  if(mode === 'item'){
+  const container = document.getElementById('inventoryList');
+  container.innerHTML = '';
 
-    const item = inventoryData.find(
-      i => i.itemCode.toLowerCase() === value
-    );
+  data.forEach(item => {
 
-    if(!item){
-      resultDiv.innerHTML = '<p>No item found</p>';
-      return;
+    let stockClass = 'stock-green';
+
+    if(item.qty === 0){
+      stockClass = 'stock-red';
+    } else if(item.qty < 10){
+      stockClass = 'stock-orange';
     }
 
-    let storesHTML = '';
-
-    item.stores.forEach(store => {
-      storesHTML += `
-        <tr>
-          <td>${store.storeCode}</td>
-          <td>${store.qty}</td>
-        </tr>
-      `;
-    });
-
-    resultDiv.innerHTML = `
-      <div class="result-card">
-        <h2>${item.productName}</h2>
-
-        <p><b>Item Code:</b> ${item.itemCode}</p>
-        <p><b>Grade:</b> ${item.grade}</p>
-        <p><b>Selling Price:</b> ${item.sellingPrice}</p>
-        <p><b>Remarks:</b> ${item.remarks}</p>
-
-        <table class="store-table">
-          <tr>
-            <td><b>Warehouse</b></td>
-            <td><b>Qty</b></td>
-          </tr>
-
-          ${storesHTML}
-
-        </table>
+    container.innerHTML += `
+      <div class="inventory-card">
+        <h3>${item.item}</h3>
+        <p>SKU: ${item.sku}</p>
+        <p>Store: ${item.store}</p>
+        <p class="${stockClass}">Available Qty: ${item.qty}</p>
       </div>
     `;
-
-  } else {
-
-    let html = '';
-
-    inventoryData.forEach(item => {
-
-      const matchedStore = item.stores.find(
-        s => s.storeCode.toLowerCase() === value
-      );
-
-      if(matchedStore){
-
-        html += `
-          <div class="result-card">
-
-            <h2>${item.productName}</h2>
-
-            <p><b>Item Code:</b> ${item.itemCode}</p>
-            <p><b>Qty:</b> ${matchedStore.qty}</p>
-
-          </div>
-        `;
-      }
-
-    });
-
-    resultDiv.innerHTML = html || '<p>No inventory found</p>';
-
-  }
-
+  });
 }
 
-loadData();
+function updateKPIs(data){
+
+  document.getElementById('totalItems').textContent = data.length;
+
+  document.getElementById('lowStock').textContent = data.filter(i => i.qty > 0 && i.qty < 10).length;
+
+  document.getElementById('outStock').textContent = data.filter(i => i.qty === 0).length;
+}
+
+function applyFilters(){
+
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const store = document.getElementById('storeFilter').value;
+
+  let filtered = inventoryData.filter(item => {
+
+    const matchesSearch =
+      item.item.toLowerCase().includes(search) ||
+      item.sku.toLowerCase().includes(search);
+
+    const matchesStore = store === '' || item.store === store;
+
+    return matchesSearch && matchesStore;
+  });
+
+  renderInventory(filtered);
+  updateKPIs(filtered);
+}
+
+document.getElementById('searchInput').addEventListener('input', applyFilters);
+document.getElementById('storeFilter').addEventListener('change', applyFilters);
+
+document.getElementById('refreshBtn').addEventListener('click', loadInventory);
+
+loadInventory();
