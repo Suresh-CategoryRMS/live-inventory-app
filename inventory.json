@@ -1,0 +1,27 @@
+[
+  {
+    "itemCode":"TSH001",
+    "productName":"Blue T-Shirt",
+    "grade":"A",
+    "sellingPrice":999,
+    "remarks":"Fast Moving",
+    "stores":[
+      {
+        "storeCode":"apr",
+        "qty":3
+      },
+      {
+        "storeCode":"bng",
+        "qty":5
+      },
+      {
+        "storeCode":"bns",
+        "qty":10
+      },
+      {
+        "storeCode":"msr",
+        "qty":20
+      }
+    ]
+  }
+]
