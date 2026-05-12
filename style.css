@@ -1,4 +1,29 @@
 *{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  background:#0f1115;
+  color:white;
+}
+
+.app-container{
+  padding:15px;
+}
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.header h1{
+  font-size:24px;
+}
 
 #refreshBtn{
   background:#1f2937;
@@ -36,52 +61,4 @@
 .card{
   background:#1f2937;
   padding:15px;
-  border-radius:16px;
-}
-
-.card span{
-  font-size:13px;
-  color:#9ca3af;
-}
-
-.card h2{
-  margin-top:10px;
-  font-size:28px;
-}
-
-.inventory-list{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-.inventory-card{
-  background:#1f2937;
-  padding:15px;
-  border-radius:16px;
-}
-
-.inventory-card h3{
-  font-size:18px;
-  margin-bottom:8px;
-}
-
-.inventory-card p{
-  margin-bottom:5px;
-  color:#d1d5db;
-}
-
-.stock-green{
-  color:#22c55e;
-  font-weight:bold;
-}
-
-.stock-orange{
-  color:#f59e0b;
-  font-weight:bold;
-}
-
-.stock-red{
-  color:#ef4444;
-  font-weight:bold;
 }
