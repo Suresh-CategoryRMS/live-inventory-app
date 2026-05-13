@@ -9,7 +9,7 @@ async function fetchInventory(){
 
     const response =
     await fetch(
-      "https://defaultdf1002680b1c406b98d2c76f4ac594.6d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/107494ec63564d7f93def2ca318edba3/triggers/manual/paths/invoke?api-version=1",
+      "https://defaultdf1002680b1c406b98d2c76f4ac594.6d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/107494ec63564d7f93def2ca318edba3/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=_f-Woq_TyLNc4l-k4ktD4HxrNvAuOJfZNHlnNOcVCQo",
       {
         method:"POST",
         headers:{
@@ -21,7 +21,10 @@ async function fetchInventory(){
     const data =
     await response.json();
 
-    inventoryData = data;
+    console.log(data);
+
+    inventoryData =
+    data.value || data;
 
     loadDashboard(inventoryData);
 
@@ -37,7 +40,6 @@ async function fetchInventory(){
   }
 
 }
-
 function loadDashboard(data){
 
   tableBody.innerHTML='';
