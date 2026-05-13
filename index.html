@@ -1,74 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Live Inventory Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <link rel="stylesheet" href="style.css">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-<div class="dashboard-container">
+<div class="app-layout">
 
-  <header class="top-header">
+  <!-- SIDEBAR -->
 
-    <div>
-      <h1>Live Inventory Dashboard</h1>
-      <p>Real-Time Inventory Visibility</p>
-    </div>
+  <aside class="sidebar">
 
-    <div class="brand-logo">
+    <div class="logo">
       ROYALOAK
     </div>
 
-    <div class="header-actions">
-      <button class="header-btn">Refresh</button>
-      <button class="header-btn export-btn">Export</button>
-    </div>
+    <ul class="menu">
+      <li class="active">Dashboard</li>
+      <li>Inventory</li>
+      <li>Stores</li>
+      <li>Reports</li>
+      <li>Transfers</li>
+      <li>Users</li>
+      <li>Settings</li>
+    </ul>
 
-  </header>
+  </aside>
 
-  <section class="filters-section">
+  <!-- MAIN -->
 
-    <div class="filter-box">
-      <label>Item Code</label>
-      <input type="text" id="itemSearch" placeholder="Enter Item Code">
-    </div>
+  <main class="main-content">
 
-    <div class="filter-box">
-      <label>Store</label>
-      <input type="text" id="storeSearch" placeholder="Enter Store Code">
-    </div>
+    <!-- TOPBAR -->
 
-    <div class="filter-box">
-      <label>Category</label>
-      <select>
-        <option>All Categories</option>
-        <option>Bedroom</option>
-        <option>Sofa</option>
-        <option>Dining</option>
-      </select>
-    </div>
+    <header class="topbar">
 
-    <div class="filter-box">
-      <label>Grade</label>
-      <select>
-        <option>All Grades</option>
-        <option>A</option>
-        <option>B</option>
-        <option>NPP</option>
-      </select>
-    </div>
+      <div class="search-box">
+        <input type="text" id="itemSearch" placeholder="Search Item Code">
+      </div>
 
-    <div class="filter-box search-btn-box">
-      <button id="searchBtn">Search</button>
-    </div>
+      <div class="top-actions">
+        <button class="btn">Export</button>
+      </div>
 
-  </section>
+    </header>
 
-  <section class="kpi-grid">
+    <!-- KPI -->
 
+    <section class="kpi-grid">
+
+      <div class="kpi-card">
+        <h3>Total Qty</h3>
+        <p id="totalQty">0</p>
+      </div>
+
+      <div class="kpi-card">
+        <h3>Low Stock</h3>
+        <p id="lowStock">0</p>
+      </div>
+
+      <div class="kpi-card">
+        <h3>Out Of Stock</h3>
+        <p id="outStock">0</p>
+      </div>
+
+      <div class="kpi-card">
+        <h3>Total Stores</h3>
+        <p id="totalStores">0</p>
+      </div>
+
+    </section>
+
+    <!-- INVENTORY -->
+
+    <section class="inventory-section">
+
+      <div class="inventory-header">
+
+        <h2>Live Inventory</h2>
+
+        <input
+          type="text"
+          id="storeSearch"
+          placeholder="Search Store">
+
+      </div>
+
+      <div class="table-wrapper">
+
+        <table class="inventory-table">
+
+          <thead>
+
+            <tr>
+              <th>Store</th>
+              <th>Item Code</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Grade</th>
+              <th>Value</th>
+              <th>Qty</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="inventoryTable"></tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+<!-- MOBILE NAV -->
+
+<nav class="mobile-nav">
+
+  <button>Home</button>
+  <button>Inventory</button>
+  <button>Reports</button>
+  <button>Profile</button>
+
+</nav>
+
+<script src="script.js"></script>
+
+</body>
 </html>
