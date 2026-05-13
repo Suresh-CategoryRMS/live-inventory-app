@@ -1,51 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live Inventory</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Inventory Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="app-container">
+<div class="dashboard-container">
 
-  <div class="header">
-    <h1>LIVE INVENTORY</h1>
-    <button id="refreshBtn">⟳</button>
-  </div>
+  <header class="top-header">
 
-  <div class="search-section">
-    <input type="text" id="searchInput" placeholder="Search SKU or Item">
-
-    <select id="storeFilter">
-      <option value="">All Stores</option>
-    </select>
-  </div>
-
-  <div class="kpi-grid">
-
-    <div class="card">
-      <span>Total Items</span>
-      <h2 id="totalItems">0</h2>
+    <div>
+      <h1>Live Inventory Dashboard</h1>
+      <p>Real-Time Inventory Visibility</p>
     </div>
 
-    <div class="card">
-      <span>Low Stock</span>
-      <h2 id="lowStock">0</h2>
+    <div class="brand-logo">
+      ROYALOAK
     </div>
 
-    <div class="card">
-      <span>Out Of Stock</span>
-      <h2 id="outStock">0</h2>
+    <div class="header-actions">
+      <button class="header-btn">Refresh</button>
+      <button class="header-btn export-btn">Export</button>
     </div>
 
-  </div>
+  </header>
 
-  <div id="inventoryList" class="inventory-list"></div>
+  <section class="filters-section">
 
-</div>
+    <div class="filter-box">
+      <label>Item Code</label>
+      <input type="text" id="itemSearch" placeholder="Enter Item Code">
+    </div>
 
-<script src="script.js"></script>
-</body>
+    <div class="filter-box">
+      <label>Store</label>
+      <input type="text" id="storeSearch" placeholder="Enter Store Code">
+    </div>
+
+    <div class="filter-box">
+      <label>Category</label>
+      <select>
+        <option>All Categories</option>
+        <option>Bedroom</option>
+        <option>Sofa</option>
+        <option>Dining</option>
+      </select>
+    </div>
+
+    <div class="filter-box">
+      <label>Grade</label>
+      <select>
+        <option>All Grades</option>
+        <option>A</option>
+        <option>B</option>
+        <option>NPP</option>
+      </select>
+    </div>
+
+    <div class="filter-box search-btn-box">
+      <button id="searchBtn">Search</button>
+    </div>
+
+  </section>
+
+  <section class="kpi-grid">
+
 </html>
