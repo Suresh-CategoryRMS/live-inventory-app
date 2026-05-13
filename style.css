@@ -11,47 +11,14 @@ body{
 }
 
 .app-layout{
-  display:flex;
+  width:100%;
   min-height:100vh;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-  width:260px;
-  background:white;
-  padding:30px 20px;
-  border-right:1px solid #e5e7eb;
-}
-
-.logo{
-  font-size:30px;
-  font-weight:800;
-  color:#d4a63d;
-  margin-bottom:40px;
-}
-
-.menu{
-  list-style:none;
-}
-
-.menu li{
-  padding:16px;
-  border-radius:12px;
-  margin-bottom:10px;
-  cursor:pointer;
-  font-weight:600;
-}
-
-.menu li.active{
-  background:#d4a63d;
-  color:white;
 }
 
 /* MAIN */
 
 .main-content{
-  flex:1;
+  width:100%;
   padding:24px;
 }
 
