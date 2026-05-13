@@ -1,49 +1,42 @@
-const inventoryData = [
-
-  {
-    store:'MSR',
-    itemCode:'WR2131-3',
-    description:'Melaka Wardrobe 3DR',
-    category:'Bedroom',
-    grade:'A',
-    vb:24999,
-    qty:2
-  },
-
-  {
-    store:'APR',
-    itemCode:'WR2131-3',
-    description:'Melaka Wardrobe 3DR',
-    category:'Bedroom',
-    grade:'A',
-    vb:24999,
-    qty:3
-  },
-
-  {
-    store:'NGM',
-    itemCode:'WR2131-3',
-    description:'Melaka Wardrobe 3DR',
-    category:'Bedroom',
-    grade:'A',
-    vb:24999,
-    qty:6
-  },
-
-  {
-    store:'ATR',
-    itemCode:'WR2131-3',
-    description:'Melaka Wardrobe 3DR',
-    category:'Bedroom',
-    grade:'A',
-    vb:24999,
-    qty:10
-  }
-
-];
+let inventoryData = [];
 
 const tableBody =
 document.getElementById('inventoryTable');
+
+async function fetchInventory(){
+
+  try{
+
+    const response =
+    await fetch(
+      "https://defaultdf1002680b1c406b98d2c76f4ac594.6d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/107494ec63564d7f93def2ca318edba3/triggers/manual/paths/invoke?api-version=1",
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        }
+      }
+    );
+
+    const data =
+    await response.json();
+
+    inventoryData = data;
+
+    loadDashboard(inventoryData);
+
+  }
+
+  catch(error){
+
+    console.error(
+      "Inventory Fetch Error:",
+      error
+    );
+
+  }
+
+}
 
 function loadDashboard(data){
 
@@ -57,15 +50,16 @@ function loadDashboard(data){
 
   data.forEach(item=>{
 
-    totalQty += item.qty;
+    totalQty += Number(item.Qty || 0);
 
-    stores.add(item.store);
+    stores.add(item.Store);
 
-    if(item.qty === 0){
+    if(Number(item.Qty) === 0){
       outStock++;
     }
 
-    if(item.qty > 0 && item.qty < 5){
+    if(Number(item.Qty) > 0 &&
+       Number(item.Qty) < 5){
       lowStock++;
     }
 
@@ -73,13 +67,13 @@ function loadDashboard(data){
     document.createElement('tr');
 
     row.innerHTML = `
-      <td>${item.store}</td>
-      <td>${item.itemCode}</td>
-      <td>${item.description}</td>
-      <td>${item.category}</td>
-      <td>${item.grade}</td>
-      <td>₹${item.vb}</td>
-      <td>${item.qty}</td>
+      <td>${item.Store || ''}</td>
+      <td>${item.ItemCode || ''}</td>
+      <td>${item.ProductName || ''}</td>
+      <td>${item.Category || ''}</td>
+      <td>${item.Grade || ''}</td>
+      <td>₹${item.Value || 0}</td>
+      <td>${item.Qty || 0}</td>
     `;
 
     tableBody.appendChild(row);
@@ -116,9 +110,15 @@ function filterData(){
   inventoryData.filter(item=>{
 
     return(
-      item.itemCode.toLowerCase().includes(itemValue)
+      (item.ItemCode || '')
+      .toLowerCase()
+      .includes(itemValue)
+
       &&
-      item.store.toLowerCase().includes(storeValue)
+
+      (item.Store || '')
+      .toLowerCase()
+      .includes(storeValue)
     );
 
   });
@@ -135,4 +135,6 @@ document
 .getElementById('storeSearch')
 .addEventListener('input',filterData);
 
-loadDashboard(inventoryData);
+fetchInventory();
+
+setInterval(fetchInventory,30000);

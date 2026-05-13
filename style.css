@@ -135,10 +135,6 @@ body{
 
 @media(max-width:768px){
 
-  .sidebar{
-    display:none;
-  }
-
   .topbar{
     flex-direction:column;
     gap:12px;
